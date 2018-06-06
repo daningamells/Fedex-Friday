@@ -4,34 +4,19 @@
   <meta charset="UTF-8">
   <title>Random Quotes</title>
   <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="jquery-jvectormap-2.0.3/jquery-jvectormap-2.0.3.css">
+  <script src="jquery-jvectormap-2.0.3/jquery-jvectormap-2.0.3.min.js"></script>
+  <script src="jquery-jvectormap-2.0.3/jquery-jvectormap-world-mill.js"></script>
+  <script src="jquery-csv-master/src/jquery.csv.js"></script>
+  <script src="country-iso-3-to-2-master/index.js"></script>
+  <script src="js/script.js"></script>
 </head>
 <body>
-  <div class="container">
-    <div id="quote-box">
-      <p class="quote">You can do anything but not everything</p>
-      <p class="source">David Allen<span class="citation">Making It All Work</span><span class="year">2009</span><span class="genre">rock</span></p>
-    </div>
-    <button id="loadQuote">Show another quote</button>
-    <button id="addQuote" onclick="addQuote()" >Add quote</button>
-  </div>
-  <div id="quoteInput">
-    <form>
-      Quote:<br>
-      <input type="text" name="firstname"><br>
-      Source:<br>
-      <input type="text" name="Source"><br>
-      Citation:<br>
-      <input type="text" name="Citation"><br>
-      Year:<br>
-      <input type="text" name="Year"><br>
-      Genre:<br>
-      <input type="text" name="Genre"><br>
-    </form>
-  </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="jquery-csv-master/src/jquery.csv.js"></script>
-  <script src="js/script.js"></script>
+  <div id="world-map" style="width: 1200px; height: 1000px"></div>
+
+
 </body>
 </html>
