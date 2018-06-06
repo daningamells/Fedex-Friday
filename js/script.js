@@ -16,9 +16,9 @@ country ISO3 Rank Total Population Manpower Available Fit-for-Service	Reaching M
 */
 //modifiers
 //manpower
-var actPersonel_Mod = 0.5; //Not in use
-var resPersonel_Mod = 0.5; //Not in use
-var man_Mod = 0.25;
+var actPersonel_Mod = 0.65; 
+var resPersonel_Mod = 0.35; 
+var man_Mod = 0.3;
 //air
 var totAir_Mod = 0.7;
 var totHel_Mod = 0.3;
@@ -29,19 +29,19 @@ var armor_Mod = 0.2;
 var spArt_Mod = 0.15;
 var towArt_Mod = 0.1;
 var rock_Mod = 0.15;
-var land_Mod = 0.25;
+var land_Mod = 0.3;
 //sea
-var airCar_Mod = 0.15;
+var airCar_Mod = 0.1;
 var ships_Mod = 0.5;
-var subs_Mod = 0.25;
-var local_Mod = 0.1; //Not in use
-var sea_Mod = 0.25;
+var subs_Mod = 0.2;
+var local_Mod = 0.1;
+var sea_Mod = 0.15;
 //support
 var finance_Mod = 0.6;
 var labour_Mod = 0.4;
 //summary
-var mil_Mod = 0.6;
-var sup_Mod = 0.4;
+var mil_Mod = 0.9;
+var sup_Mod = 0.1;
 
 var newData = [];
 var cdata = {};
@@ -83,17 +83,18 @@ function rawScore() {
     //Navel = 10, 11, 12, 13
     //var scores[8][sel.length];
     //loop through each row to get the score for each section
-    for (var row = 0; row < newData.length; row++) {
+    for(var row = 0; row < newData.length; row++)
+    {
         //Military Scores
-        newData[row]["Personnel Score"] = /*actPersonel_Mod * */ newData[row]['Total Military Personnel']; // + resPersonel_Mod * indexResults.[2].[row];
-        newData[row]["Air Score"] = totAir_Mod * newData[row]['Total Aircraft Strength'] + totHel_Mod * newData[row]['Total Helicopter Strength'];
+        newData[row]["Personnel Score"] = actPersonel_Mod * newData[row]['Active Personnel'] + resPersonel_Mod * newData[row]['Reserve Personnel'];
+        newData[row]["Air Score"]  = totAir_Mod * newData[row]['Total Aircraft Strength'] + totHel_Mod * newData[row]['Total Helicopter Strength'];
         newData[row]["Land Score"] = tanks_Mod * newData[row]['Combat Tanks'] + armor_Mod * newData[row]['Armored Fighting Vehicles'] + spArt_Mod * newData[row]['Self-Propelled Artillery'] + towArt_Mod * newData[row]['Towed Artillery'] + rock_Mod * newData[row]['Rocket Projectors'];
-        newData[row]["Naval Score"] = airCar_Mod * newData[row]['Aircraft Carriers'] + ships_Mod * (newData[row]['Frigates'] + newData[row]['Corvettes'] + newData[row]['Destroyers']) + subs_Mod * newData[row]['Submarines']; // + local_Mod * indexResults.[13].[row];
-        newData[row]["Military Score"] = man_Mod * newData[row]["Personnel Score"] + air_Mod * newData[row]["Air Score"] + land_Mod * newData[row]["Land Score"] + sea_Mod * newData[row]["Naval Score"] //Total Military Score
+        newData[row]["Naval Score"] = airCar_Mod * newData[row]['Aircraft Carriers'] + ships_Mod * (newData[row]['Frigates'] + newData[row]['Corvettes'] + newData[row]['Destroyers']) + subs_Mod * newData[row]['Submarines'] + local_Mod * (newData[row]['Patrol Craft'] + newData[row]['Mine Warfare Vessels']);
+        newData[row]["Military Score"] = man_Mod * newData[row]["Personnel Score"] + air_Mod * newData[row]["Air Score"] + land_Mod * newData[row]["Land Score"] + sea_Mod *  newData[row]["Naval Score"];  //Total Military Score
         //Support Score
-        newData[row]["Support Score"] = /*finance_Mod * indexResults.[14].[row] + labour_Mod * */ newData[row]["Labor Force"];
+        newData[row]["Support Score"] = /*finance_Mod * indexResults.[14].[row] + labour_Mod * */newData[row]["Labor Force"];
         //Combined Score
-        newData[row]["Total Score"] = mil_Mod * newData[row]["Military Score"] + sup_Mod * newData[row]["Support Score"]
+        newData[row]["Total Score"] = mil_Mod * newData[row]["Military Score"] + sup_Mod * newData[row]["Support Score"];
     }
 
     //return scores;
@@ -101,7 +102,8 @@ function rawScore() {
 }
 
 //Indexing
-index('Total Military Personnel', 'Total Military Personnel');
+index('Active Personnel', 'Active Personnel');
+index('Reserve Personnel', 'Reserve Personnel');
 index('Total Aircraft Strength', 'Total Aircraft Strength');
 index('Total Helicopter Strength', 'Total Helicopter Strength');
 index('Combat Tanks', 'Combat Tanks');
@@ -114,6 +116,8 @@ index('Frigates', 'Frigates');
 index('Destroyers', 'Destroyers');
 index('Corvettes', 'Corvettes');
 index('Submarines', 'Submarines');
+index('Patrol Craft', 'Patrol Craft');
+index('Mine Warfare Vessels', 'Mine Warfare Vessels');
 index('Labor Force', 'Labor Force');
 rawScore();
 
